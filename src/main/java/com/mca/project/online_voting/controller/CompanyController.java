@@ -27,24 +27,7 @@ public class CompanyController {
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @PostMapping
+    @PostMapping("createCompany")
     public ResponseEntity<Company> createCompany(@RequestBody Company company) {
         try {
             Company createdCompany = companyService.createCompany(company);
@@ -55,6 +38,21 @@ public class CompanyController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {

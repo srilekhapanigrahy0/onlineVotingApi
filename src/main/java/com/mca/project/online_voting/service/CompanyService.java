@@ -1,6 +1,7 @@
 package com.mca.project.online_voting.service;
 import com.mca.project.online_voting.dto.CompanyDTO;
 import com.mca.project.online_voting.entity.Company;
+import com.mca.project.online_voting.entity.UserRole;
 import com.mca.project.online_voting.repository.CompanyRepository;
 import com.mca.project.online_voting.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,10 @@ import java.util.Optional;
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
-    private final UserRoleRepository userRoleRepository;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, UserRoleRepository userRoleRepository) {
+    public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
-        this.userRoleRepository = userRoleRepository;
     }
 
     @Transactional(readOnly = true)
@@ -31,24 +30,6 @@ public class CompanyService {
             return  companyDetails.get();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Transactional
     public Company createCompany(Company company) {
         // Set creation date and initial status
@@ -59,7 +40,7 @@ public class CompanyService {
             company.setLastUpdateDate(LocalDateTime.now());
         }
         if (company.getStatus() == null || company.getStatus().isEmpty()) {
-            company.setStatus("PENDING"); // Default initial status
+            company.setStatus("P"); // Default initial status
         }
 
         // Validate unique name
@@ -67,8 +48,38 @@ public class CompanyService {
             throw new IllegalArgumentException("Company with this name already exists.");
         });
 
-        return companyRepository.save(company);
+        Company insertedCompany = companyRepository.save(company);
+
+
+        /*UserRole userRole = new UserRole();
+        long companyId = insertedCompany.getId();
+        userRole.setRole("Creator");
+        userRole.setCompany(insertedCompany);
+        userRole.user setUser(getUserById(1));
+        userRoleService.assignUserRole(userRole);*/
+
+        return insertedCompany;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Transactional(readOnly = true)
     public Optional<Company> getCompanyById(Long id) {

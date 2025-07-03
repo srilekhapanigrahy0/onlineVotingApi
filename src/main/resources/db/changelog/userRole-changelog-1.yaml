@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1 # Unique identifier for this changeSet, incremented from the previous one
+      author: your-name # Replace with your name or team identifier
+      changes:
+        - createTable:
+            tableName: user_roles # Matches the @Table(name = "user_roles") in your UserRole entity
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT # Matches the type of 'id' in your User entity
+                  constraints:
+                    nullable: false
+              - column:
+                  name: company_id
+                  type: BIGINT # Matches the type of 'id' in your Company entity
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(50) # Adjust size as needed, e.g., "ADMIN", "USER"
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: user_roles
+            columnNames: user_id, company_id # Defines the composite primary key
+            constraintName: pk_user_roles # A descriptive name for the primary key constraint
+        - addForeignKeyConstraint:
+            baseTableName: user_roles
+            baseColumnNames: user_id
+            referencedTableName: users # References your existing 'users' table
+            referencedColumnNames: id
+            constraintName: fk_user_roles_user # A descriptive name for the foreign key constraint
+            # onDelete: CASCADE # Consider adding this if you want user deletion to cascade to roles
+            # onDelete: RESTRICT # Or RESTRICT, SET NULL, etc., based on your business logic
+        - addForeignKeyConstraint:
+            baseTableName: user_roles
+            baseColumnNames: company_id
+            referencedTableName: companies # References your existing 'companies' table
+            referencedColumnNames: id
+            constraintName: fk_user_roles_company # A descriptive name for the foreign key constraint
+            # onDelete: CASCADE # Consider adding this if you want company deletion to cascade to roles
+            # onDelete: RESTRICT

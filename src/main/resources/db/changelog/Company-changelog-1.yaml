@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1 # Unique identifier for this changeSet
+      author: your-name # Replace with your name or team identifier
+      changes:
+        - createTable:
+            tableName: companies # Matches the @Table(name = "companies") in your Company entity
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255) # Adjust size as needed
+                  constraints:
+                    nullable: false
+                    unique: true # Company names should be unique
+              - column:
+                  name: logo
+                  type: VARCHAR(500) # URL or path to logo, adjust size
+              - column:
+                  name: created_by
+                  type: VARCHAR(100) # User ID or name of creator
+              - column:
+                  name: created_date
+                  type: DATETIME # Maps to LocalDateTime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(50) # e.g., "PENDING", "ACTIVE"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: approved_by
+                  type: VARCHAR(100) # User ID or name of approver
+              - column:
+                  name: approved_date
+                  type: DATETIME
+              - column:
+                  name: comment
+                  type: VARCHAR(1000) # Any comments
+              - column:
+                  name: last_update_date
+                  type: DATETIME # Maps to LocalDateTime

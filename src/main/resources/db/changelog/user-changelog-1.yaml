@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1  # Unique identifier for this changeSet
+      author: your-name # Replace with your name or team identifier
+      changes:
+        - createTable:
+            tableName: users # Matches the @Table(name = "users") in your User entity
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255) # Adjust size as needed
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: VARCHAR(50) # Adjust size as needed
+                  constraints:
+                    unique: true # Assuming phone numbers should be unique
+              - column:
+                  name: email
+                  type: VARCHAR(255) # Adjust size as needed
+                  constraints:
+                    nullable: false
+                    unique: true # Email should be unique
+              - column:
+                  name: mail_verification
+                  type: BOOLEAN
+                  # No nullable constraint here, allowing it to be null if not verified initially
+              - column:
+                  name: userid
+                  type: VARCHAR(100) # Adjust size as needed for user IDs
+                  constraints:
+                    nullable: false
+                    unique: true # User ID should be unique
+              - column:
+                  name: password
+                  type: VARCHAR(255) # Store hashed passwords, so a larger size is good
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: VARCHAR(20) # e.g., 'Male', 'Female', 'Other'
+              - column:
+                  name: photo
+                  type: VARCHAR(500) # Store URL or path to photo, adjust size as needed
+              - column:
+                  name: regd_date
+                  type: DATETIME # Maps to LocalDateTime in Java, stores date and time
+                  # No nullable constraint here, as it will be set by the application

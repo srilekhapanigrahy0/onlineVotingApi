@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT c.id, c.name FROM companies c where id in (SELECT company_id FROM user_roles where user_id = :userId)")
+    @Query(nativeQuery = true, value = "SELECT c.id, c.name, c.created_by, c.created_date as createdOn, c.status FROM companies c where id in (SELECT company_id FROM user_roles where user_id = :userId)")
     Optional<List<CompanyDTO>> getAllCompanyByUserId(@Param("userId") int userId);
 
 

@@ -21,8 +21,9 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("getAllCompanyByUserId/{userId}")
-    public ResponseEntity<List<CompanyDTO>> getAllCompanyByUserId(@RequestParam(required = true) int userId) {
+    public ResponseEntity<List<CompanyDTO>> getAllCompanyByUserId(@PathVariable(required = true) int userId) {
         List<CompanyDTO> companies  = companyService.getAllCompanyByUserId(userId);
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
@@ -39,41 +40,17 @@ public class CompanyController {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {
-        return companyService.getCompanyById(id)
+    @GetMapping("getCompanyDetailsById/{company_id}")
+    public ResponseEntity<Company> getCompanyDetailsById(@PathVariable Long company_id) {
+        return companyService.getCompanyById(company_id)
                 .map(company -> new ResponseEntity<>(company, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<Company> getCompanyByName(@PathVariable String name) {
-        return companyService.getCompanyByName(name)
-                .map(company -> new ResponseEntity<>(company, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable Long id, @RequestBody Company companyDetails) {
+    @PutMapping("updateCompanyDetails/{company_id}")
+    public ResponseEntity<Company> updateCompanyDetails(@PathVariable Long company_id, @RequestBody Company companyDetails) {
         try {
-            Company updatedCompany = companyService.updateCompany(id, companyDetails);
+            Company updatedCompany = companyService.updateCompany(company_id, companyDetails);
             return new ResponseEntity<>(updatedCompany, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Company not found
@@ -82,7 +59,7 @@ public class CompanyController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deleteCompany/{id}")
     public ResponseEntity<HttpStatus> deleteCompany(@PathVariable Long id) {
         try {
             companyService.deleteCompany(id);
@@ -93,4 +70,23 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*@GetMapping("/name/{name}")
+    public ResponseEntity<Company> getCompanyByName(@PathVariable String name) {
+        return companyService.getCompanyByName(name)
+                .map(company -> new ResponseEntity<>(company, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }*/
 }

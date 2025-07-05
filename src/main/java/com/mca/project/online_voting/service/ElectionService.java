@@ -17,8 +17,12 @@ import java.util.Optional;
 @Service
 public class ElectionService {
 
+    private final ElectionRepository electionRepository;
+
     @Autowired
-    private ElectionRepository electionRepository;
+    public ElectionService(ElectionRepository electionRepository) {
+        this.electionRepository = electionRepository;
+    }
 
     public List<ElectionDTO> getAllElectionsByUserId(int userId) {
         Optional<List<ElectionDTO>> electionDetails = electionRepository.getAllElectionsByUserId(userId);

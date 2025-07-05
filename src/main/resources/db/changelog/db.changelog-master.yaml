@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/userRole-changelog-1.yaml
   - include:
       file: db/changelog/Election-changelog-1.yaml
+  - include:
+      file: db/changelog/ElectionGroup-changelog-1.yaml

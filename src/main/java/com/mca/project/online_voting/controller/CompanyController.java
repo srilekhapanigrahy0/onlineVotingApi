@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/companies") // Base path for all company-related endpoints
 public class CompanyController {
@@ -28,6 +29,7 @@ public class CompanyController {
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("createCompany")
     public ResponseEntity<Company> createCompany(@RequestBody Company company) {
         try {
@@ -40,6 +42,7 @@ public class CompanyController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("getCompanyDetailsById/{company_id}")
     public ResponseEntity<Company> getCompanyDetailsById(@PathVariable Long company_id) {
         return companyService.getCompanyById(company_id)
@@ -47,6 +50,7 @@ public class CompanyController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("updateCompanyDetails/{company_id}")
     public ResponseEntity<Company> updateCompanyDetails(@PathVariable Long company_id, @RequestBody Company companyDetails) {
         try {
@@ -59,13 +63,14 @@ public class CompanyController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("deleteCompany/{id}")
     public ResponseEntity<HttpStatus> deleteCompany(@PathVariable Long id) {
         try {
             companyService.deleteCompany(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

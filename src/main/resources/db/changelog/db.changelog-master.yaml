@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/Company-changelog-1.yaml
   - include:
       file: db/changelog/userRole-changelog-1.yaml
+  - include:
+      file: db/changelog/Election-changelog-1.yaml

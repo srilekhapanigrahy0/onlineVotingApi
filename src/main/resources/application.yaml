@@ -1,0 +1,34 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: '896778284464-cobi3evga3524hp2lcie3o0l3a7aej28.apps.googleusercontent.com' # Replace with your Google Client ID
+            client-secret: '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' # Replace with your Google Client Secret
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
+
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com # Same as provider's issuer-uri
+
+cors:
+  allowedOrigins: http://localhost:3000
+  allowedMethods: "*"
+  allowedHeaders: "*"
+  allowCredentials: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE  # or TRACE
+        web:
+          filter:
+            CorsFilter: TRACE

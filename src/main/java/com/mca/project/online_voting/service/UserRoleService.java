@@ -76,4 +76,8 @@ public class UserRoleService {
         }
         userRoleRepository.deleteById(id);
     }
+
+    public List<UserRole> findByUserId(Long id) {
+        return userRoleRepository.findByIdUserId(id);
+    }
 }

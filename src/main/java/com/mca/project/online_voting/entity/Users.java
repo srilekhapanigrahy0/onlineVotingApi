@@ -1,16 +1,19 @@
 package com.mca.project.online_voting.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "users") // Good practice to pluralize table names, or match your liquibase script
 @Data // Generates getters, setters, toString, equals, and hashCode
 @NoArgsConstructor // Generates a no-argument constructor
 @AllArgsConstructor // Generates a constructor with all fields
+@Builder
 public class Users {
 
     @Id
@@ -41,6 +44,17 @@ public class Users {
 
     @Column(name = "regd_date")
     private LocalDateTime regdDate; // Use LocalDateTime for date and time
+
+    @Transient // Not persisted in DB, will be populated at runtime
+    public Set<String> getUserRoles() {
+        // This will now need to be explicitly set or fetched when the User object is loaded
+        return java.util.Collections.emptySet(); // Default empty
+    }
+
+
+
+
+
 
     // You can add custom methods here if needed, but Lombok handles basic accessors.
 }

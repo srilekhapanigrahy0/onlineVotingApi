@@ -1,5 +1,6 @@
 package com.mca.project.online_voting.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Data // Generates getters, setters, toString, equals, and hashCode
 @NoArgsConstructor // Generates a no-argument constructor
 @AllArgsConstructor // Generates a constructor with all fields
+@Builder
 public class Company {
 
     @Id

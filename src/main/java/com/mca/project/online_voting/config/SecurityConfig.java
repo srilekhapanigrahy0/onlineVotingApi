@@ -105,6 +105,9 @@ public class SecurityConfig {
                         "/admin/**",
 
                         "/api/login",
+                        "/api/companies/**",
+                        "/api/elections/**",
+                        "/api/electionGroup/**",
                         "/api/user/*",
                         "/api/hello",
                         "/api/logout",
@@ -135,14 +138,13 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
                         .defaultSuccessUrl("http://localhost:3000/dashboard", true)
-                        .userInfoEndpoint(userInfo -> userInfo.oidcUserService(oidcUserService)) // Use the passed parameter
+                        .userInfoEndpoint(userInfo -> userInfo.oidcUserService(oidcUserService))
                 )
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
                         .jwt(Customizer.withDefaults())
                 );
         return http.build();
     }
-
 
     // --- SECURITY FILTER CHAIN 2: For Basic/Form Authentication (Other Users) ---
     @Bean
@@ -192,7 +194,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "X-Requested-With", "Origin")); // Add common headers
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

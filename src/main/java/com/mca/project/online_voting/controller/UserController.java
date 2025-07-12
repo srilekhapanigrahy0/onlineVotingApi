@@ -70,8 +70,14 @@ public class UserController {
         Map<String, Object> userDetails = new HashMap<>();
 
         if (oauth2User != null) { // OAuth2 authenticated user
+
             userDetails.putAll(oauth2User.getAttributes());
-            //Optional<Users> user =  userService.findByEmail(oauth2User.getAttribute("email"));
+            Optional<Users> user =  userService.findByEmail(oauth2User.getAttribute("email"));
+
+            if(!user.isEmpty())
+                userDetails.put("userId", user.get().getId());
+            else
+                userDetails.put("userId", 0);
 
             userDetails.put("roles", SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)

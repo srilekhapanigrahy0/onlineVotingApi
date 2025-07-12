@@ -2,7 +2,6 @@ package com.mca.project.online_voting.service;
 import com.mca.project.online_voting.dto.ElectionGroupDTO;
 import com.mca.project.online_voting.entity.ElectionGroup;
 import com.mca.project.online_voting.repository.ElectionGroupRepository;
-import com.mca.project.online_voting.repository.ElectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +26,45 @@ public class ElectionGroupService {
             return null;
         } else
             return  electionGroupDetails.get();
+    }
+
+    public Optional<ElectionGroup> getElectionGroupDetailsById(Long id) {
+        return electionGroupRepository.findById(id);
+    }
+
+    @Transactional
+    public ElectionGroup createElectionGroup(ElectionGroup electionGroup) {
+        return electionGroupRepository.save(electionGroup);
+    }
+
+    @Transactional
+    public ElectionGroup updateElectionGroupDetails(Long id, ElectionGroup updatedElectionGroup) {
+        return electionGroupRepository.findById(id)
+                .map(existing -> {
+                    existing.setName(updatedElectionGroup.getName());
+                    existing.setStartDate(updatedElectionGroup.getStartDate());
+                    existing.setEndDate(updatedElectionGroup.getEndDate());
+                    existing.setDetails(updatedElectionGroup.getDetails());
+                    existing.setCreatedBy(updatedElectionGroup.getCreatedBy());
+                    existing.setCreatedDate(updatedElectionGroup.getCreatedDate());
+                    existing.setStatus(updatedElectionGroup.getStatus());
+                    existing.setApprovedBy(updatedElectionGroup.getApprovedBy());
+                    existing.setApprovedDate(updatedElectionGroup.getApprovedDate());
+                    existing.setComment(updatedElectionGroup.getComment());
+                    existing.setUpdatedBy(updatedElectionGroup.getUpdatedBy());
+                    existing.setLastUpdateDate(updatedElectionGroup.getLastUpdateDate());
+                    return electionGroupRepository.save(existing);
+                })
+                .orElseThrow(() -> new RuntimeException("Election Group not found with id " + id));
+    }
+
+    @Transactional
+    public boolean deleteElectionGroup(long id) {
+        if (electionGroupRepository.existsById(id)) {
+            electionGroupRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
 }
